@@ -28,7 +28,69 @@
       "ssh_timeout": "2h",
       "ssh_username": "{{user `ssh_username`}}",
       "type": "qemu",
-      "vm_name": "{{user `vm_name`}}"
+      "vm_name": "{{user `vm_name`}}",
+      "qemuargs": [
+        [
+          "-machine",
+          "virt,accel=kvm,gic-version=host"
+        ],
+        [
+          "-cpu",
+          "host"
+        ],
+        [
+          "-k",
+          "en-us"
+        ],
+        [
+          "-boot",
+          "strict=off"
+        ],
+        [
+          "-device",
+          "usb-ehci"
+        ],
+        [
+          "-device",
+          "usb-kbd"
+        ],
+        [
+          "-device",
+          "usb-mouse"
+        ],
+        [
+          "-drive",
+          "file=./output/{{user `vm_name`}}/{{user `vm_name`}},if=none,id=drive0,cache=writeback"
+        ],
+        [
+          "-device",
+          "virtio-blk,drive=drive0,bootindex=0"
+        ],
+        [
+          "-drive",
+          "file=/home/cloudbase/.cache/packer/2be5e9eb5f3e34da74a5e0c4bdda097034e379c5.iso,if=none,id=drive1,cache=writeback"
+        ],
+        [
+          "-device",
+          "virtio-blk,drive=drive1,bootindex=1"
+        ],
+        [
+          "-drive",
+          "file=/var/lib/libvirt/images/capi.fd,format=raw,if=pflash"
+        ],
+        [
+          "-drive",
+          "file=/var/lib/libvirt/images/capi-nvmram.fd,format=raw,if=pflash"
+        ],
+        "-usb",
+        [
+          "-device",
+          "virtio-gpu-pci"
+        ]
+      ],
+      "vnc_bind_address": "0.0.0.0",
+      "vnc_port_max": 5903,
+      "vnc_port_min": 5903
     }
   ],
   "post-processors": [
