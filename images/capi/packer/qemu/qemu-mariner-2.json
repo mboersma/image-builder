@@ -1,0 +1,18 @@
+{
+  "boot_command": "",
+  "boot_media_path": "",
+  "http_directory": "",
+  "build_name": "mariner-2",
+  "distro_arch": "amd64",
+  "distro_name": "cbl-mariner",
+  "distro_version": "2.0",
+  "firmware": "OVMF.fd",
+  "http_directory": "",
+  "guest_os_type": "generic-linux",
+  "iso_checksum": "cd53a22119aacd3b4af30ee7b429c610f5d6ba6b5cf9555aa58d0a83d0902c60",
+  "iso_checksum_type": "sha256",
+  "iso_url": "http://10.7.12.12/full-aarch64-iso-autoinstall-sda-2.0.20230627.1358.iso",
+  "os_display_name": "CBL-Mariner 2",
+  "shutdown_command": "shutdown -P now",
+  "unmount_iso": "true"
+}

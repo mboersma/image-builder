@@ -153,7 +153,7 @@
     "ansible_user_vars": "",
     "artifact_name": "{{user `build_name`}}-kube-{{user `kubernetes_semver`}}",
     "boot_media_path": "http://{{ .HTTPIP }}:{{ .HTTPPort }}",
-    "boot_wait": "10s",
+    "boot_wait": "45s",
     "build_timestamp": "{{timestamp}}",
     "containerd_sha256": null,
     "containerd_url": "https://github.com/containerd/containerd/releases/download/v{{user `containerd_version`}}/cri-containerd-cni-{{user `containerd_version`}}-linux-amd64.tar.gz",
