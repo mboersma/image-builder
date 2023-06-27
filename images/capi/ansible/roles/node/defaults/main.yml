@@ -33,6 +33,7 @@ al2_rpms:
 # Used for Azure Linux (CBL-Mariner 2) distributions
 mariner_rpms:
 - lsof
+- cloud-init
 
 # Used for RedHat based distributions ==  7 (ex. RHEL-7, CentOS-7 etc.)
 rh7_rpms:
@@ -92,7 +93,7 @@ photon_4_rpms:
 - jq
 
 common_virt_rpms:
-- open-vm-tools
+- jq
 
 common_virt_debs:
 - linux-cloud-tools-virtual
