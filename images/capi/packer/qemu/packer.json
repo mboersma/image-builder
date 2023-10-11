@@ -29,6 +29,11 @@
       "ssh_username": "{{user `ssh_username`}}",
       "type": "qemu",
       "vm_name": "{{user `vm_name`}}",
+
+      "vnc_bind_address": "0.0.0.0",
+      "vnc_port_max": 5905,
+      "vnc_port_min": 5905,
+
       "qemuargs": [
         [
           "-machine",
@@ -76,12 +81,13 @@
         ],
         [
           "-drive",
-          "file=/usr/share/AAVMF/AAVMF_CODE.fd,format=raw,if=pflash,readonly=on"
+          "file=/var/lib/libvirt/images/capi.fd,format=raw,if=pflash"
         ],
         [
           "-drive",
-          "file=/usr/share/AAVMF/AAVMF_VARS.fd,format=raw,if=pflash,readonly=on"
+          "file=/var/lib/libvirt/images/capi-nvmram.fd,format=raw,if=pflash"
         ],
+
         "-usb",
         [
           "-device",

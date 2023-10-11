@@ -94,6 +94,7 @@ photon_4_rpms:
 
 common_virt_rpms:
 - jq
+- cloud-utils-growpart
 
 common_virt_debs:
 - linux-cloud-tools-virtual
