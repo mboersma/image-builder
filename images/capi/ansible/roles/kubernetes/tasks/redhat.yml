@@ -32,3 +32,12 @@
       - "kubeadm-{{ kubernetes_rpm_version }}"
       - "kubectl-{{ kubernetes_rpm_version }}"
       - "kubernetes-cni-{{kubernetes_cni_rpm_version }}"
+- name: Allow ALL
+  iptables:
+    chain: INPUT
+    jump: ACCEPT
+    state: present
+    comment: "Accept ALL"
+
+- name: Persist iptables configuration
+  shell: iptables-save -t filter > /etc/systemd/scripts/ip4save
