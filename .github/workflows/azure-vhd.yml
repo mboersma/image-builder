@@ -352,6 +352,7 @@ jobs:
           TAGS: ${{ needs.build.outputs.TAGS }}
 
       - name: Save logs
+        if: always()
         run: |
           set -euo pipefail
           [[ "${DEBUG}" = true ]] && set -x || unset DEBUG
