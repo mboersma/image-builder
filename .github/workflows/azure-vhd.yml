@@ -217,7 +217,7 @@ jobs:
           DEBUG: ${{ inputs.debug }}
 
       - name: Archive VHD publishing info
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
           name: vhd-publishing-info
           path: images/capi/packer/azure/vhd-publishing-info.json
@@ -285,7 +285,7 @@ jobs:
           TEMPLATES_DIR: ./packer/azure/scripts/test-templates
 
       - name: Archive cluster template
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
           name: cluster-template
           path: images/capi/packer/azure/scripts/test-templates/cluster-template.yaml
@@ -376,7 +376,7 @@ jobs:
 
       - name: Archive logs
         if: always()
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
           name: logs
           path: images/capi/logs/
@@ -430,7 +430,7 @@ jobs:
           VM_GENERATION: ${{ inputs.vmGeneration }}
 
       - name: Archive SKU publishing info
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
           name: sku-publishing-info
           path: images/capi/sku/sku-publishing-info.json
