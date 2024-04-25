@@ -104,7 +104,7 @@ jobs:
           egress-policy: audit
 
       - name: Check out image-builder code
-        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
 
       - name: Verify that Windows kube-proxy image is available
         if: inputs.os == 'Windows'
@@ -235,7 +235,7 @@ jobs:
           egress-policy: audit
 
       - name: Check out image-builder code
-        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
 
       - name: Log in to Azure
         uses: azure/login@8c334a195cbb38e46038007b304988d888bf676a # v2
@@ -408,7 +408,7 @@ jobs:
             objects.githubusercontent.com:443
 
       - name: Check out image-builder code
-        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
 
       - name: Create SKU in Marketplace offer
         run: |
