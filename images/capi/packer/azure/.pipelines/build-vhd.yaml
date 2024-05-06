@@ -16,6 +16,7 @@ jobs:
   pool:
     name: $(BUILD_POOL)
   steps:
+  - template: managed-identity-login.yml
   - template: k8s-config.yaml
   - script: |
       set -euo pipefail
