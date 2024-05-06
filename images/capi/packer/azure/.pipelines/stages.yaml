@@ -20,12 +20,10 @@ pr: none
 stages:
   - stage: vhd
     jobs:
+    - template: managed-identity-login.yaml
     - template: build-vhd.yaml
     variables:
-      AZURE_TENANT_ID: $(AZURE_TENANT_ID_VHD)
-      AZURE_CLIENT_ID: $(AZURE_CLIENT_ID_VHD)
-      AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET_VHD)
-      AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID_VHD)
+      SYSTEM_ACCESS_TOKEN: $(access.token)
 
   - stage: test
     condition: and(succeeded(), eq(variables.CLEANUP, 'False'))

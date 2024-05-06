@@ -46,8 +46,6 @@ jobs:
       make build-azure-vhd-$os-$version | tee packer/azure/packer.out
     displayName: Building VHD
     workingDirectory: '$(system.defaultWorkingDirectory)/images/capi'
-    env:
-      AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
   - template: generate-sas.yaml
   - template: vhd-publishing-info.yaml
   - task: PublishPipelineArtifact@1

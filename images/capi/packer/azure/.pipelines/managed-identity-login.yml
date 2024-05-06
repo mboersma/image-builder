@@ -1,0 +1,10 @@
+steps:
+  - bash: |
+      set -euo pipefail
+      # This is the Azure DevOps Resource ID
+      # See https://learn.microsoft.com/azure/devops/organizations/accounts/manage-personal-access-tokens-via-api
+      AZURE_DEVOPS_RESOURCE="499b84ac-1321-427f-aa17-267ca6975798"
+      az login --identity
+      TOKEN=$(az account get-access-token --query accessToken --resource $AZURE_DEVOPS_RESOURCE -o tsv)
+      echo "##vso[task.setvariable variable=access.token;issecret=true]$TOKEN"
+    displayName: Get access token for managed identity
