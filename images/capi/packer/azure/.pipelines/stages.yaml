@@ -20,7 +20,7 @@ pr: none
 stages:
   - stage: vhd
     jobs:
-    - template: managed-identity-login.yaml
+    - template: managed-identity-login.yml
     - template: build-vhd.yaml
     variables:
       SYSTEM_ACCESS_TOKEN: $(access.token)
