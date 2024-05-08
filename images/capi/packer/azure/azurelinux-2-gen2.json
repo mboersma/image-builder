@@ -1,6 +1,6 @@
 {
-  "build_name": "mariner-2-gen2",
-  "distribution": "mariner",
+  "build_name": "azurelinux-2-gen2",
+  "distribution": "azurelinux",
   "distribution_release": "cbl-mariner-2",
   "distribution_version": "2",
   "image_offer": "cbl-mariner",
