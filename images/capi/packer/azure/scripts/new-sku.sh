@@ -41,7 +41,7 @@ if [ "$OS" == "Ubuntu" ]; then
     os_type="Ubuntu"
     os_family="Linux"
 elif [ "$OS" == "AzureLinux" ] || [ "$OS" == "Mariner" ]; then
-    os_type="CBL-Mariner"
+    os_type="CblMariner"
     os_family="Linux"
 elif [ "$OS" == "Windows" ]; then
     os_type="Other"
