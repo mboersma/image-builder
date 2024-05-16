@@ -14,16 +14,17 @@ jobs:
   pool:
     name: $(BUILD_POOL)
   steps:
-  - task: DownloadPipelineArtifact@2
-    inputs:
-      source: current
-      artifact: publishing-info
-      path: $(system.defaultWorkingDirectory)/images/capi/packer/azure/vhd/
-  - task: DownloadPipelineArtifact@2
-    inputs:
-      source: current
-      artifact: sku-info
-      path: $(system.defaultWorkingDirectory)/images/capi/packer/azure/sku/
+  # - task: DownloadPipelineArtifact@2
+  #   inputs:
+  #     source: current
+  #     artifact: publishing-info
+  #     path: $(system.defaultWorkingDirectory)/images/capi/packer/azure/vhd/
+  # - task: DownloadPipelineArtifact@2
+  #   inputs:
+  #     source: current
+  #     artifact: sku-info
+  #     path: $(system.defaultWorkingDirectory)/images/capi/packer/azure/sku/
+  - template: managed-identity-login.yml
   - script: |
       ./scripts/new-disk-version.sh
     displayName: Create a new marketplace SKU
