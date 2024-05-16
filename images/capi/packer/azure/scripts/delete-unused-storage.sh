@@ -97,7 +97,7 @@ for name in ${OFFERS}; do
   echo "Getting URLs for ${name}..."
   offer=$(pub offers show -p "$PUBLISHER" -o "$name")
   # Capture "label" as well as "osVhdUrl" so we can archive storage accounts with something readable.
-  urls=$(echo "${offer}" | jq -r '.definition["plans"][]."microsoft-azure-corevm.vmImagesPublicAzure"[] | [.label, .osVhdUrl] | @csv')
+  urls=$(echo "${offer}" | jq -r '.definition["plans"][]."microsoft-azure-corevm.vmImagesPublicAzure"[]? | [.label, .osVhdUrl] | @csv')
   if [[ -z $URLS ]]; then
     URLS=${urls}
   else
