@@ -22,7 +22,10 @@ stages:
     jobs:
     - template: build-vhd.yaml
     variables:
-      SYSTEM_ACCESS_TOKEN: $(access.token)
+      AZURE_TENANT_ID: $(AZURE_TENANT_ID_VHD)
+      AZURE_CLIENT_ID: $(AZURE_CLIENT_ID_VHD)
+      AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET_VHD)
+      AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID_VHD)
 
   - stage: test
     condition: and(succeeded(), eq(variables.CLEANUP, 'False'))
