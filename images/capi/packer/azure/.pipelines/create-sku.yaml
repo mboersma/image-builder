@@ -21,12 +21,28 @@ jobs:
   steps:
   - template: managed-identity-login.yml
   - script: |
+      echo << EOF > sku-publishing-info.json
+      {
+      "publisher" : "cncf-upstream",
+      "offer" : "capi",
+      "sku_id" : "azurelinux-3-gen1",
+      "k8s_version" : "1.29.5"
+      }
+      EOF
+      echo << EOF > vhd-publishing-info.json
+      {
+        "vhd_base_url": "https://capi1716242339mzci.blob.core.windows.net/system/Microsoft.Compute/Images/cluster-api-vhds/capi-1716242362-osDisk.dummy.vhd",
+        "vhd_url": "https://capi1716242339mzci.blob.core.windows.net/system/Microsoft.Compute/Images/cluster-api-vhds/capi-1716242362-osDisk.dummy.vhd?st=not-a-sas",
+        "storage_account_name": "capi1716242339mzci",
+        "resource_group_name": "cluster-api-images",
+        "tags": "creationTimestamp=2024-05-20T21:58:46Z jobName=image-builder-vhd"
+      }
+      EOF
       ./scripts/new-sku.sh
     displayName: Create a new marketplace SKU
     workingDirectory: '$(system.defaultWorkingDirectory)/images/capi/packer/azure'
     env:
-      SYSTEM_ACCESS_TOKEN: $(access.token)
-      AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
+      AZURE_TOKEN: $(access.token)
   - task: PublishPipelineArtifact@1
     inputs:
       artifact: 'sku-info'
