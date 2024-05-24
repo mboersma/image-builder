@@ -102,11 +102,15 @@ ensure_py3() {
 
 pip3_install() {
   ensure_py3
-  if output=$(pip3 install --disable-pip-version-check --user "${@}" 2>&1); then
+  flags=""
+  if [ -z "$VIRTUAL_ENV" ]; then
+    flags="--user"
+  fi
+  if output=$(pip3 install --disable-pip-version-check $flags "${@}" 2>&1); then
     echo "$output"
   elif [[ $output == *"error: externally-managed-environment"* ]]; then
     >&2 echo "warning: externally-managed-environment, retrying pip3 install with --break-system-packages"
-    pip3 install --disable-pip-version-check --user --break-system-packages "${@}"
+    pip3 install --disable-pip-version-check $flags --break-system-packages "${@}"
   else
     >&2 echo "$output"
     exit 1
