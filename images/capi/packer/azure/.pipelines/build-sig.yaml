@@ -40,6 +40,7 @@ jobs:
       if ! command -v az &> /dev/null; then
         sudo tdnf install -y azure-cli
       fi
+      sudo pip3 install --disable-pip-version-check pywinrm==0.5.0
     displayName: Install Azure CLI
   - task: AzureCLI@2
     displayName: Build SIG Image

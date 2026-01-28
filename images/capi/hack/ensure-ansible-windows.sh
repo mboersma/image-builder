@@ -40,12 +40,5 @@ export PIP_DISABLE_PIP_VERSION_CHECK=1 PIP_ROOT_USER_ACTION=ignore
 
 if pip3 show pywinrm >/dev/null 2>&1; then exit 0; fi
 
-# If OS is Azure Linux 3, install pywinrm as root
-if [[ "$(cat /etc/os-release | grep '^ID=' | cut -d= -f2)" == "azurelinux" ]]; then
-  sudo pip3 install --disable-pip-version-check pywinrm=="${_version}"
-  if ! sudo pip3 show pywinrm ; then exit 1; fi
-  exit 0
-else
-  pip3_install "pywinrm==${_version}"
-fi
+pip3_install "pywinrm==${_version}"
 if ! pip3 show pywinrm ; then exit 1; fi
