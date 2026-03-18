@@ -46,11 +46,14 @@ $ErrorActionPreference = "stop"
 # The Ansible provisioner also uses ansible_winrm_server_cert_validation=ignore,
 # so the existing listener and certificate are sufficient.
 
-# WinRM – configure settings on the existing listener
+# WinRM – configure settings on the existing listener.
+# Do NOT use "winrm quickconfig" here: it restarts the WinRM service internally,
+# which kills Packer's active WinRM session. The service is already running
+# (Packer is connected via it), and the explicit "winrm set" commands below
+# apply all necessary configuration without a service restart.
 write-output "Setting up WinRM"
 write-host "(host) setting up WinRM"
 
-cmd.exe /c winrm quickconfig -q
 cmd.exe /c winrm set "winrm/config" '@{MaxTimeoutms="1800000"}'
 cmd.exe /c winrm set "winrm/config/winrs" '@{MaxMemoryPerShellMB="1024"}'
 cmd.exe /c winrm set "winrm/config/service" '@{AllowUnencrypted="true"}'
