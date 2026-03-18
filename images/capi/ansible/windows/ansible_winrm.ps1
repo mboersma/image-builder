@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This file is from packer documentation: 
+# This file is from packer documentation:
 # https://www.packer.io/docs/provisioners/ansible.html#winrm-communicator
 # https://www.packer.io/docs/builders/amazon/ebs#connecting-to-windows-instances-using-winrm
 
@@ -39,14 +39,14 @@ if ($currentPolicy -notin $sufficientPolicies) {
 # Don't set this before Set-ExecutionPolicy as it throws an error
 $ErrorActionPreference = "stop"
 
-# Remove HTTP listener
-Remove-Item -Path WSMan:\Localhost\listener\listener* -Recurse
+# NOTE: We intentionally do NOT remove/recreate the WinRM HTTPS listener here.
+# Packer's azure-arm builder already establishes a WinRM SSL connection with
+# winrm_insecure=true (skip cert validation). Destroying the active listener
+# kills Packer's session and causes "connection reset by peer" retry loops.
+# The Ansible provisioner also uses ansible_winrm_server_cert_validation=ignore,
+# so the existing listener and certificate are sufficient.
 
-# Create a self-signed certificate to let ssl work
-$Cert = New-SelfSignedCertificate -CertstoreLocation Cert:\LocalMachine\My -DnsName "packer"
-New-Item -Path WSMan:\LocalHost\Listener -Transport HTTPS -Address * -CertificateThumbPrint $Cert.Thumbprint -Force
-
-# WinRM
+# WinRM – configure settings on the existing listener
 write-output "Setting up WinRM"
 write-host "(host) setting up WinRM"
 
@@ -58,9 +58,6 @@ cmd.exe /c winrm set "winrm/config/client" '@{AllowUnencrypted="true"}'
 cmd.exe /c winrm set "winrm/config/service/auth" '@{Basic="true"}'
 cmd.exe /c winrm set "winrm/config/client/auth" '@{Basic="true"}'
 cmd.exe /c winrm set "winrm/config/service/auth" '@{CredSSP="true"}'
-cmd.exe /c winrm set "winrm/config/listener?Address=*+Transport=HTTPS" "@{Port=`"5986`";Hostname=`"packer`";CertificateThumbprint=`"$($Cert.Thumbprint)`"}"
 cmd.exe /c netsh advfirewall firewall set rule group="remote administration" new enable=yes
 cmd.exe /c netsh firewall add portopening TCP 5986 "Port 5986"
-cmd.exe /c net stop winrm
 cmd.exe /c sc config winrm start= auto
-cmd.exe /c net start winrm
