@@ -48,6 +48,11 @@ on:
         description: 'OS version (e.g., 24.04, 2022-containerd)'
         required: true
         type: string
+      sig_image_version:
+        description: 'Gallery image version (numeric X.Y.Z). Required for pre-release Kubernetes builds (e.g. 1.37.0-alpha.3), since Azure gallery versions must be numeric. Defaults to kubernetes_version when empty.'
+        required: false
+        type: string
+        default: ''
       resource_group:
         description: 'Azure resource group name'
         required: false
@@ -123,6 +128,7 @@ jobs:
       KUBERNETES_VERSION: ${{ inputs.kubernetes_version }}
       OS: ${{ inputs.os }}
       OS_VERSION: ${{ inputs.os_version }}
+      SIG_IMAGE_VERSION_INPUT: ${{ inputs.sig_image_version }}
       RESOURCE_GROUP: ${{ inputs.resource_group }}
       STAGING_GALLERY_NAME: ${{ inputs.staging_gallery_name }}
       AZURE_LOCATION: ${{ inputs.azure_location }}
@@ -220,7 +226,16 @@ jobs:
           DISTRO="${os}-${version}"
           echo "DISTRO=${DISTRO}" >> $GITHUB_ENV
 
-          export PACKER_FLAGS="${PACKER_FLAGS} --var sig_image_version=${KUBERNETES_VERSION}"
+          # Azure Compute Gallery image versions must be numeric MAJOR.MINOR.PATCH.
+          # Pre-release Kubernetes versions (e.g. 1.37.0-alpha.3) are not valid here,
+          # so require an explicit numeric sig_image_version input in that case.
+          SIG_IMAGE_VERSION="${SIG_IMAGE_VERSION_INPUT:-${KUBERNETES_VERSION}}"
+          if [[ ! "${SIG_IMAGE_VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "ERROR: sig_image_version must be numeric X.Y.Z (got '${SIG_IMAGE_VERSION}')." >&2
+            echo "For pre-release Kubernetes builds, set the 'sig_image_version' input to a numeric value." >&2
+            exit 1
+          fi
+          export PACKER_FLAGS="${PACKER_FLAGS} --var sig_image_version=${SIG_IMAGE_VERSION}"
           export PATH=$PATH:$HOME/.local/bin
           export USE_AZURE_CLI_AUTH="True"
 
